@@ -11,10 +11,14 @@ import (
 
 func showWorkingRepository() {
 	dir, _ := os.Getwd()
-	repositoryRoot := io.FindRepositoryRoot(dir)
+	repositoryRoot, err := io.FindRepositoryRoot(dir)
+	if err != nil {
+		fmt.Print(constants.MessageNotInRepository)
+		os.Exit(1)
+	}
 	config := io.RepositoryConfig{}
 	confContent := io.ReadFile(filepath.Join(repositoryRoot, fmt.Sprintf("./%s/%s", constants.DirectoryName, constants.RepositoryConfigFileName)))
-	err := yaml.Unmarshal(confContent, &config)
+	err = yaml.Unmarshal(confContent, &config)
 	if err != nil {
 		panic(err)
 	}
@@ -32,7 +36,12 @@ func StringArrayContains(s []string, e string) bool {
 
 func WriteFileListConfig(config io.RepositoryFileList, wd string) {
 	configToWrite, _ := yaml.Marshal(config)
-	io.WriteFile(configToWrite, filepath.Join(io.FindRepositoryRoot(wd), fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName))
+	dir, err := io.FindRepositoryRoot(wd)
+	if err != nil {
+		fmt.Print(constants.MessageNotInRepository)
+		os.Exit(1)
+	}
+	io.WriteFile(configToWrite, filepath.Join(dir, fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName))
 }
 
 func WriteRepositoryConfig(config io.RepositoryConfig, wd string) {

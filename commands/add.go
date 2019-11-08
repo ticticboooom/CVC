@@ -17,7 +17,7 @@ func ParseRunAdd(set *flag.FlagSet) {
 
 func addFilesToRepositoryFromDirectory() {
 	if len(os.Args) < 3 {
-		fmt.Print("\nYou must provide a relative path for the files you wish to add\n")
+		fmt.Print(constants.MessageNoRelativePathForAdd)
 		os.Exit(1)
 	}
 	relativeDir := os.Args[2]
@@ -42,12 +42,16 @@ func addFilesToRepositoryFromDirectory() {
 }
 
 func getFilesConfig(dir string) io.RepositoryFileList {
-	if _, err := os.Stat(filepath.Join(io.FindRepositoryRoot(dir), fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName)); os.IsNotExist(err) {
+	repoDir, err := io.FindRepositoryRoot(dir)
+	if err != nil {
+		fmt.Print(constants.MessageNotInRepository)
+	}
+	if _, err := os.Stat(filepath.Join(repoDir, fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName)); os.IsNotExist(err) {
 		return io.RepositoryFileList{Files: make([]string, 0)}
 	}
 	fileConf := io.RepositoryFileList{}
-	confContent := io.ReadFile(filepath.Join(io.FindRepositoryRoot(dir), fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName))
-	err := yaml.Unmarshal(confContent, &fileConf)
+	confContent := io.ReadFile(filepath.Join(dir, fmt.Sprintf("./%s/", constants.DirectoryName), constants.RepositoryIncludedFilesFileName))
+	err = yaml.Unmarshal(confContent, &fileConf)
 	if err != nil {
 		panic(err)
 	}

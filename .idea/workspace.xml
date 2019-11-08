@@ -2,18 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51b0ce8d-1333-4d20-b60e-b26c49e5fa1e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.cvc/rconf.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/go_build_main_go.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commands/add.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commands/common.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/constants/constants.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/io/directories.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/io/filewriters.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/io/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/messages.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cvc/rconf.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.cvc/rconf.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/go_build_main_go.exe" beforeDir="false" afterPath="$PROJECT_DIR$/build/go_build_main_go.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/add.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/add.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/common.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/constants/constants.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/io/directories.go" beforeDir="false" afterPath="$PROJECT_DIR$/io/directories.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +38,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
@@ -65,7 +63,7 @@
       <module name="cvc" />
       <working_directory value="$PROJECT_DIR$/" />
       <go_parameters value="-i" />
-      <parameters value="add ." />
+      <parameters value="init --repo cvc1" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="cvc" />
@@ -90,6 +88,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="adding init and add commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding init and add commands" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -97,6 +99,16 @@
           <url>file://$PROJECT_DIR$/main.go</url>
           <line>12</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/commands/common.go</url>
+          <line>39</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/commands/init.go</url>
+          <line>31</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

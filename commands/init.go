@@ -6,23 +6,20 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
-	"strconv"
 	"strings"
 )
 
 func ParseRunInit(set *flag.FlagSet) {
+	if checkAlreadyInRepository() {
+		fmt.Print(constants.MessageAlreadyInRepository)
+		os.Exit(1)
+	}
 	createCvcDirectory()
 	dir, _ := os.Getwd()
-	createRepositoryConfigFile(*getRepositoryName(), dir)
-
+	createRepositoryConfigFile(getRepositoryName(), dir)
 }
 
 func createCvcDirectory() {
-	if _, err := os.Stat(fmt.Sprintf("./%s/", constants.DirectoryName)); !os.IsNotExist(err) {
-		fmt.Print("\nCould not init repository, it seems you already have one here silly.\n")
-		os.Exit(1)
-	}
 	err := os.MkdirAll(fmt.Sprintf("./%s/", constants.DirectoryName), os.ModePerm)
 	if err != nil {
 		fmt.Print(err)
@@ -30,11 +27,11 @@ func createCvcDirectory() {
 	}
 }
 
-func getRepositoryName() *string {
+func getRepositoryName() string {
 	dir, _ := os.Getwd()
-	baseDirSections := strings.Split(dir, strconv.QuoteRune(os.PathSeparator))
+	baseDirSections := strings.Split(dir, string(byte(os.PathSeparator)))
 	baseDir := baseDirSections[len(baseDirSections)-1]
-	repo := flag.String("repo", strings.Replace(baseDir, " ", "-", 0), "The Name of your repository")
+	repo := strings.ReplaceAll(baseDir, " ", "-")
 	return repo
 }
 
@@ -43,5 +40,15 @@ func createRepositoryConfigFile(repoName string, rootDir string) {
 		Name: repoName,
 	}
 	WriteRepositoryConfig(config, rootDir)
-	WriteFileListConfig(io.RepositoryFileList{Files: make([]string, 0)}, filepath.Join(rootDir, fmt.Sprintf("./%s/%s", constants.DirectoryName, constants.RepositoryConfigFileName)))
+	WriteFileListConfig(io.RepositoryFileList{Files: make([]string, 0)}, rootDir)
+}
+
+func checkAlreadyInRepository() bool {
+	wd, _ := os.Getwd()
+
+	_, err := io.FindRepositoryRoot(wd)
+	if err != nil {
+		return false
+	}
+	return true
 }
